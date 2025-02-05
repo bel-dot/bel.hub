@@ -1,13 +1,13 @@
-import CommandInput from './components/CommandInput'
-import CommandOutput from './components/CommandOutput';
+import ConsoleInput from './components/ConsoleInput'
+import ConsoleOutput from './components/ConsoleOutput';
 import './App.css';
 
 function App() {
 
   return (
     <>
-      <CommandOutput />
-      <CommandInput />
+      <ConsoleOutput />
+      <ConsoleInput />
     </>
   )
 }
