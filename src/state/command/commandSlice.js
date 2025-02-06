@@ -1,6 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = {}
+const initialState = {
+    showConsole: true,
+    showPong: false,
+}
 
 function printConsole(text) {
     const output = document.getElementById('console-output');
@@ -17,6 +20,7 @@ const commandSlice = createSlice({
         },
         help: () => {
             printConsole(`about - prints info about the program
+                pong - launches pong, obviously.
                 echo <message> - outputs <message>
                 help - displays this message`);
         },
@@ -28,10 +32,19 @@ const commandSlice = createSlice({
         },
         echo: (_state, action) => {
             printConsole(action.payload);
+        },
+        pong: (state) => {
+            printConsole("Loading pong...");
+            state.showConsole = false;
+            state.showPong = true;
+        },
+        quit: (state) => {
+            state.showConsole = true;
+            state.showPong = false;
         }
     },
 });
 
-export const { unknown, help, about, echo } = commandSlice.actions;
+export const { unknown, help, about, echo, pong, quit } = commandSlice.actions;
 
 export default commandSlice.reducer;

@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 import { useDispatch } from 'react-redux';
-import { help, unknown, echo, about } from '../state/command/commandSlice'; 
+import { help, unknown, echo, about, pong } from '../state/command/commandSlice'; 
 import './ConsoleInput.scss'
 
 function ConsoleInput() {
@@ -25,6 +25,9 @@ function ConsoleInput() {
          case 'echo':
             dispatch(echo(input.split(' ').slice(1).join(' ')));
             break;
+         case 'pong':
+            dispatch(pong());
+            break;
          default:
             dispatch(unknown());
       }
@@ -35,7 +38,7 @@ function ConsoleInput() {
    return (
       <div id='console-input'>
          <span className='arrow'>&gt;</span>
-         <input type='text' ref={inputEl} id='input-el' onKeyDown={() => {
+         <input type='text' ref={inputEl} id='input-el' onKeyDown={(event) => {
             if(event.key === 'Enter') {
                handleCommand(event.target.value);
             }
