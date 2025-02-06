@@ -1,0 +1,22 @@
+@mixin paddle {
+    position: absolute;
+    width: 20px;
+    height: 150px;
+    background-color: white;
+}
+
+#pong-screen {
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+    
+    #player-paddle {
+        @include paddle;
+        left: 5%;
+    }
+    
+    #computer-paddle {
+        @include paddle;
+        right: 5%;
+    }
+}

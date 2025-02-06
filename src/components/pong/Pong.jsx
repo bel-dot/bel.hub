@@ -5,6 +5,7 @@ import Ball from "./Ball";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { quit } from '../../state/command/commandSlice';
+import './Pong.scss';
 
 export default function Pong() {
     const dispatch = useDispatch(); 
