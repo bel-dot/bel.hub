@@ -9,6 +9,8 @@
     width: 100vw;
     height: 100vh;
     position: relative;
+    display: flex;
+    justify-content: center;
     
     #player-paddle {
         @include paddle;
@@ -18,5 +20,35 @@
     #computer-paddle {
         @include paddle;
         right: 5%;
+    }
+    
+    #pong-ball {
+        width: 20px;
+        height: 20px;
+        background-color: white;
+    }
+    
+    #pong-interface {
+        color: white;
+        font-size: 48px;
+        position: absolute;
+        top: 1%;
+        display: flex;
+        justify-content: space-between;
+        width: 100px;
+
+        #pong-line {
+            position: absolute;
+            top: 0;
+            left: 45%;
+            width: 10px;
+            height: 100vh;
+            background: repeating-linear-gradient(to bottom, 
+                white 0%,
+                white 5%,
+                transparent 5%,
+                transparent 10%
+            );
+        }
     }
 }
