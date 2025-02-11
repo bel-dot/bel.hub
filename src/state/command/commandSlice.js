@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
     showConsole: true,
@@ -10,6 +10,13 @@ function printConsole(text) {
     output.innerText += '> ' + document.getElementById('input-el').value + '\n';
     output.innerText += text + '\n';
 }
+
+export const startPong = createAsyncThunk(
+    'commands/pong',
+    async () => {
+        await new Promise((resolve) => setTimeout(resolve, 1000));
+    }
+)
 
 const commandSlice = createSlice({
     name: "commands",
@@ -33,16 +40,21 @@ const commandSlice = createSlice({
         echo: (_state, action) => {
             printConsole(action.payload);
         },
-        pong: (state) => {
-            printConsole("Loading pong...");
-            state.showConsole = false;
-            state.showPong = true;
-        },
         quit: (state) => {
             state.showConsole = true;
             state.showPong = false;
         }
     },
+    extraReducers: (builder) => {
+        builder
+            .addCase(startPong.pending, () => {
+                printConsole("Launching pong...");
+            })
+            .addCase(startPong.fulfilled, (state) => {
+                state.showConsole = false;
+                state.showPong = true;
+            });
+    }
 });
 
 export const { unknown, help, about, echo, pong, quit } = commandSlice.actions;
