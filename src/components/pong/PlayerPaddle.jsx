@@ -1,8 +1,8 @@
-import { useEffect, useState } from "react"
+import { useEffect, useState, useRef } from "react"
 
-export default function PlayerPaddle() {
-    const [position, setPosition] = useState(Math.round(window.innerHeight / 2));
+export default function PlayerPaddle({position, setPosition}) {
     const [keysPressed, setKeysPressed] = useState({ ArrowUp: false, ArrowDown: false });
+    let requestRef = useRef(null);
 
     useEffect(() => {
         const handleKeyDown = (event) => {
@@ -24,17 +24,18 @@ export default function PlayerPaddle() {
 
   useEffect(() => {
     const movePaddle = () => {
-        setPosition((prev) => {
-            let newPos = prev;
-            if (keysPressed.ArrowUp && newPos > 0) newPos -= 5;
-            if (keysPressed.ArrowDown && newPos < window.innerHeight - 150) newPos += 5;
-            return newPos;
-          });
-        };
-
-        const interval = setInterval(movePaddle, 8); // ~120 FPS
-        return () => clearInterval(interval);
-    }, [keysPressed]);
+      setPosition((prev) => {
+          let newPos = prev;
+          if (keysPressed.ArrowUp && newPos > 0) newPos -= 5;
+          if (keysPressed.ArrowDown && newPos < window.innerHeight - 150) newPos += 5;
+          return newPos;
+        });
+        requestRef.current = requestAnimationFrame(movePaddle);
+      };
+       
+      requestRef.current = requestAnimationFrame(movePaddle);  
+      return () => cancelAnimationFrame(requestRef.current);
+    }, [keysPressed, setPosition]);
 
 
     return (

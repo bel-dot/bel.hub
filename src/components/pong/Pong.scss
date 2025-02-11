@@ -14,12 +14,12 @@
     
     #player-paddle {
         @include paddle;
-        left: 5%;
+        left: 50px;
     }
     
     #computer-paddle {
         @include paddle;
-        right: 5%;
+        right: 50px;
     }
     
     #pong-ball {
