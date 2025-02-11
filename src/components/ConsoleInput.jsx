@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 import { useDispatch } from 'react-redux';
-import { help, unknown, echo, about, pong } from '../state/command/commandSlice'; 
+import { help, unknown, echo, about, startPong } from '../state/command/commandSlice'; 
 import './ConsoleInput.scss'
 
 function ConsoleInput() {
@@ -26,7 +26,7 @@ function ConsoleInput() {
             dispatch(echo(input.split(' ').slice(1).join(' ')));
             break;
          case 'pong':
-            dispatch(pong());
+            dispatch(startPong());
             break;
          default:
             dispatch(unknown());
