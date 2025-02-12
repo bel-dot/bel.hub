@@ -56,9 +56,9 @@ export default function Pong() {
             let newDy = prev.dy;
             
             const isColliding = (
-                newX <= 70 && newY >= position && newY <= position + 150
+                newX <= 70 && prev.x >= 50 && newY >= position && newY <= position + 150
             ) || (
-                newX >= window.innerWidth - 70 && newY >= computerPos && newY <= computerPos + 150
+                newX >= window.innerWidth - 70 && prev.x <= window.innerWidth - 50 && newY >= computerPos && newY <= computerPos + 150
             );
             
             if(isColliding) {
