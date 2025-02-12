@@ -3,12 +3,13 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 const initialState = {
     showConsole: true,
     showPong: false,
-}
+    consoleText: ``,
+};
 
-function printConsole(text) {
-    const output = document.getElementById('console-output');
-    output.innerText += '> ' + document.getElementById('input-el').value + '\n';
-    output.innerText += text + '\n';
+function printConsole(text, state) {
+    state.consoleText += '> ' + document.getElementById('input-el').value + '\n';
+    state.consoleText += text + '\n';
+    console.log(state.consoleText);
 }
 
 export const startPong = createAsyncThunk(
@@ -16,29 +17,33 @@ export const startPong = createAsyncThunk(
     async () => {
         await new Promise((resolve) => setTimeout(resolve, 1000));
     }
-)
+);
 
 const commandSlice = createSlice({
     name: "commands",
     initialState,
     reducers: {
-        unknown: () => {
-            printConsole("Error: Command unknown!");
+        unknown: (state) => {
+            printConsole("Error: Command unknown!", state);
         },
-        help: () => {
+        help: (state) => {
             printConsole(`about - prints info about the program
-                pong - launches pong, obviously.
+                pong - launches pong.
                 echo <message> - outputs <message>
-                help - displays this message`);
+                clear - clears the console output
+                help - displays this message`, state);
         },
-        about: () => {
+        about: (state) => {
             printConsole(`Bel.Hub v0.1
                 Created by Artem Biliakov (BelDot) in 2025.
                 Made with Vite, React and Redux. Deployed via GitHub Pages.
-                Idea inspired by Linux and Bash.`)
+                Idea inspired by Linux and Bash.`, state)
         },
-        echo: (_state, action) => {
-            printConsole(action.payload);
+        echo: (state, action) => {
+            printConsole(action.payload, state);
+        },
+        clear: (state) => {
+            state.consoleText = '';
         },
         quit: (state) => {
             state.showConsole = true;
@@ -47,8 +52,8 @@ const commandSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder
-            .addCase(startPong.pending, () => {
-                printConsole("Launching pong...");
+            .addCase(startPong.pending, (state) => {
+                printConsole("Launching pong...", state);
             })
             .addCase(startPong.fulfilled, (state) => {
                 state.showConsole = false;
@@ -57,6 +62,7 @@ const commandSlice = createSlice({
     }
 });
 
-export const { unknown, help, about, echo, pong, quit } = commandSlice.actions;
+export const { unknown, help, about, echo, pong, quit, clear } =
+  commandSlice.actions;
 
 export default commandSlice.reducer;

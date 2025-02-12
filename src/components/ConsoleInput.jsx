@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 import { useDispatch } from 'react-redux';
-import { help, unknown, echo, about, startPong } from '../state/command/commandSlice'; 
+import { help, unknown, echo, about, startPong, clear } from '../state/command/commandSlice'; 
 import './ConsoleInput.scss'
 
 function ConsoleInput() {
@@ -8,10 +8,10 @@ function ConsoleInput() {
    const dispatch = useDispatch();
 
    useEffect(() => {
-      window.addEventListener("load", () => {
+      setTimeout(() => {
          inputEl.current.focus();
-      });
-   }, []);
+      }, 500);
+   });
    
    const handleCommand = (input) => {
       const command = input.split(' ')[0]; 
@@ -28,11 +28,12 @@ function ConsoleInput() {
          case 'pong':
             dispatch(startPong());
             break;
+         case 'clear':
+            dispatch(clear());
+            break;
          default:
             dispatch(unknown());
       }
-      
-      event.target.value = '';
    }
    
    return (
@@ -41,6 +42,7 @@ function ConsoleInput() {
          <input type='text' ref={inputEl} id='input-el' onKeyDown={(event) => {
             if(event.key === 'Enter') {
                handleCommand(event.target.value);
+               event.target.value = '';
             }
          }} />
       </div>
