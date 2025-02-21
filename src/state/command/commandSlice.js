@@ -83,6 +83,7 @@ const commandSlice = createSlice({
         help: (state) => {
             printConsole(`about - prints info about the program
                 pong - launches pong.
+                donut - shows a donut (code by a1k0n)
                 echo <message> - outputs <message>
                 clear - clears the console output
                 help - displays this message`, state);
