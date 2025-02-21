@@ -1,11 +1,12 @@
 import { useEffect, useRef } from 'react';
 import { useDispatch } from 'react-redux';
-import { help, unknown, echo, about, startPong, clear } from '../state/command/commandSlice'; 
+import { help, unknown, echo, about, startPong, clear, donut } from '../state/command/commandSlice'; 
 import './ConsoleInput.scss'
 
 function ConsoleInput() {
    const inputEl = useRef(null);
    const dispatch = useDispatch();
+   let donutInterval = useRef(null);
 
    useEffect(() => {
       setTimeout(() => {
@@ -14,6 +15,12 @@ function ConsoleInput() {
    });
    
    const handleCommand = (input) => {
+      if(donutInterval.current) {
+         clearInterval(donutInterval.current);
+         donutInterval.current = null;
+         dispatch(clear());
+         document.getElementById('console-output').style.whiteSpace = 'pre-line';
+      }
       const command = input.split(' ')[0]; 
       switch(command.toLowerCase()) {
          case 'about':
@@ -30,6 +37,11 @@ function ConsoleInput() {
             break;
          case 'clear':
             dispatch(clear());
+            break;
+         case 'donut':
+            dispatch(clear());
+            document.getElementById('console-output').style.whiteSpace = 'pre';
+            donutInterval.current = setInterval(() => dispatch(donut()), 50);
             break;
          default:
             dispatch(unknown());
