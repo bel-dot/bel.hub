@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-    showConsole: true,
+    showConsole: false,
     showPong: false,
     consoleText: ``,
     A: 1,
@@ -74,6 +74,9 @@ const commandSlice = createSlice({
     name: "commands",
     initialState,
     reducers: {
+        start: (state) => {
+          state.showConsole = true;
+        },
         unknown: (state) => {
             printConsole("Error: Command unknown!", state);
         },
@@ -117,7 +120,7 @@ const commandSlice = createSlice({
     }
 });
 
-export const { unknown, help, about, echo, pong, quit, clear, donut } =
+export const { unknown, help, about, echo, pong, quit, clear, donut, start } =
   commandSlice.actions;
 
 export default commandSlice.reducer;
