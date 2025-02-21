@@ -1,7 +1,8 @@
 import { useEffect, useRef } from 'react';
 import { useDispatch } from 'react-redux';
 import { help, unknown, echo, about, startPong, clear, donut } from '../state/command/commandSlice'; 
-import './ConsoleInput.scss'
+import './ConsoleInput.scss';
+import 'animate.css';
 
 function ConsoleInput() {
    const inputEl = useRef(null);
@@ -51,7 +52,8 @@ function ConsoleInput() {
    return (
       <div id='console-input'>
          <span className='arrow'>&gt;</span>
-         <input type='text' ref={inputEl} id='input-el' onKeyDown={(event) => {
+         <input type='text' ref={inputEl} id='input-el' className='animate__animated animate__slideInUp animate__fast'
+         onKeyDown={(event) => {
             if(event.key === 'Enter') {
                handleCommand(event.target.value);
                event.target.value = '';
