@@ -89,7 +89,7 @@ const commandSlice = createSlice({
                 help - displays this message`, state);
         },
         about: (state) => {
-            printConsole(`Bel.Hub v0.1
+            printConsole(`Bel.Hub v0.2
                 Created by Artem Biliakov (BelDot) in 2025.
                 Made with Vite, React and Redux. Deployed via GitHub Pages.
                 Idea inspired by Linux and Bash.`, state)
