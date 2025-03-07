@@ -11,7 +11,6 @@ export default function StartScreen() {
         let timeouts = [];
         timeouts.push(setTimeout(() => {
             screen.current.innerText += 'Starting Bel.Hub...\n';
-            console.log('Starting Bel.Hub...');
         }, 1000));
         timeouts.push(setTimeout(() => {
             screen.current.innerText += 'Loading React components...';
@@ -39,7 +38,8 @@ export default function StartScreen() {
             screen.current.style.visibility = 'collapse';
         }, 9000));
         timeouts.push(setTimeout(() => {
-           dispatch(start()); 
+            console.log("Starting console...");
+            dispatch(start()); 
         }, 10000));
         
         return () => {

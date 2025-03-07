@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
+    showStartScreen: true,
     showConsole: false,
     showPong: false,
     consoleText: ``,
@@ -11,7 +12,6 @@ const initialState = {
 function printConsole(text, state) {
     state.consoleText += '> ' + document.getElementById('input-el').value + '\n';
     state.consoleText += text + '\n';
-    console.log(state.consoleText);
 }
 
 export const startPong = createAsyncThunk(
@@ -75,6 +75,7 @@ const commandSlice = createSlice({
     initialState,
     reducers: {
         start: (state) => {
+          state.showStartScreen = false;
           state.showConsole = true;
         },
         unknown: (state) => {
