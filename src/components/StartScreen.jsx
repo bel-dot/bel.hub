@@ -9,6 +9,24 @@ export default function StartScreen() {
     
     useEffect(() => {
         let timeouts = [];
+
+        const skip = (e) => {
+            if(e.key === ' ') {
+                timeouts.forEach(clearTimeout);        
+                if(screen.current) {
+                    screen.current.style.visibility = 'collapse';
+                }
+                dispatch(start());
+                
+                return () => {
+                    document.removeEventListener('keydown', skip);
+                }
+            }
+            else {
+                document.getElementById('skip-hint').style.visibility = 'visible';
+            }
+        };
+        document.addEventListener('keydown', skip)
         timeouts.push(setTimeout(() => {
             screen.current.innerText += 'Starting Bel.Hub...\n';
         }, 1000));
@@ -48,6 +66,9 @@ export default function StartScreen() {
     });
     
     return (
-        <div ref={screen} style={{whiteSpace: 'pre-line'}} id='start-screen' />
+        <div>
+            <div ref={screen} style={{whiteSpace: 'pre-line'}} id='start-screen' />
+            <span id='skip-hint'>Press Space to skip.</span>
+        </div>
     );
 }

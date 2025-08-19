@@ -10,3 +10,15 @@
     font-size: 24px;
     visibility: visible;
 }
+
+#skip-hint {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    padding: 10px;
+    color: white;
+
+    opacity: 0.5;
+    font-size: 2em;
+    visibility: hidden;
+}
