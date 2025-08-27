@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 import { useDispatch } from 'react-redux';
-import { help, unknown, echo, about, startPong, clear, donut } from '../state/command/commandSlice'; 
+import { help, unknown, echo, about, startPong, clear, donut, typewriter } from '../state/command/commandSlice'; 
 import './ConsoleInput.scss';
 import 'animate.css';
 
@@ -22,8 +22,8 @@ function ConsoleInput() {
          dispatch(clear());
          document.getElementById('console-output').style.whiteSpace = 'pre-line';
       }
-      const command = input.split(' ')[0]; 
-      switch(command.toLowerCase()) {
+      const command = input.split(' '); 
+      switch(command[0].toLowerCase()) {
          case 'about':
             dispatch(about());
             break;
@@ -31,13 +31,16 @@ function ConsoleInput() {
             dispatch(help());
             break;
          case 'echo':
-            dispatch(echo(input.split(' ').slice(1).join(' ')));
+            dispatch(echo(command.slice(1).join(' ')));
             break;
          case 'pong':
             dispatch(startPong());
             break;
          case 'clear':
             dispatch(clear());
+            break;
+         case 'typewriter':
+            setTimeout(() => dispatch(typewriter(isNaN(command[1]) ? 72 : command[1])), 100);
             break;
          case 'donut':
             dispatch(clear());

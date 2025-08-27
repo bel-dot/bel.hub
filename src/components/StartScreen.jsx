@@ -16,11 +16,8 @@ export default function StartScreen() {
                 if(screen.current) {
                     screen.current.style.visibility = 'collapse';
                 }
-                dispatch(start());
                 
-                return () => {
-                    document.removeEventListener('keydown', skip);
-                }
+                dispatch(start());
             }
             else {
                 document.getElementById('skip-hint').style.visibility = 'visible';
@@ -62,6 +59,7 @@ export default function StartScreen() {
         
         return () => {
             timeouts.forEach(clearTimeout);
+            document.removeEventListener('keydown', skip);
         }
     });
     

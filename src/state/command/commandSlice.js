@@ -4,9 +4,11 @@ const initialState = {
     showStartScreen: true,
     showConsole: false,
     showPong: false,
+    showTypewriter: false,
     consoleText: ``,
     A: 1,
     B: 1,
+    writerSize: 72,
 };
 
 function printConsole(text, state) {
@@ -85,18 +87,26 @@ const commandSlice = createSlice({
             printConsole(`about - prints info about the program
                 pong - launches pong.
                 donut - shows a donut (code by a1k0n)
+                typewriter <pixel-size> - opens 'typewriter', where you... type text I guess.
                 echo <message> - outputs <message>
                 clear - clears the console output
                 help - displays this message`, state);
         },
         about: (state) => {
-            printConsole(`Bel.Hub v0.2
+            printConsole(`Bel.Hub v0.3
                 Created by Artem Biliakov (BelDot) in 2025.
                 Made with Vite, React and Redux. Deployed via GitHub Pages.
                 Idea inspired by Linux and Bash.`, state)
         },
         echo: (state, action) => {
             printConsole(action.payload, state);
+        },
+        typewriter: (state, action) => {
+          if(action.payload) {
+            state.writerSize = action.payload;
+          }
+          state.showTypewriter = true;
+          state.showConsole = false;
         },
         donut: (state) => {
           asciiframe(state);
@@ -108,6 +118,7 @@ const commandSlice = createSlice({
         quit: (state) => {
             state.showConsole = true;
             state.showPong = false;
+            state.showTypewriter = false;
         }
     },
     extraReducers: (builder) => {
@@ -122,7 +133,7 @@ const commandSlice = createSlice({
     }
 });
 
-export const { unknown, help, about, echo, pong, quit, clear, donut, start } =
+export const { unknown, help, about, echo, pong, quit, clear, donut, start, typewriter } =
   commandSlice.actions;
 
 export default commandSlice.reducer;
