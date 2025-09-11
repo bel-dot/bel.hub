@@ -23,12 +23,15 @@ export default function Pong() {
     let comRequestRef = useRef(null);
 
     useEffect(() => {
-        window.addEventListener("keydown", (event) => {
-            if(event.key.toLowerCase() === 'q') {
+        const handleQuit = (e) => {
+            if(e.key.toLowerCase() === 'q') {
                 dispatch(quit()); 
                 dispatch(reset());
             } 
-        })
+        }
+        window.addEventListener("keydown", handleQuit)
+        
+        return () => window.removeEventListener('keydown', handleQuit);
     })
 
 
