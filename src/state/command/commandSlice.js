@@ -93,7 +93,7 @@ const commandSlice = createSlice({
         },
         help: (state) => {
             printConsole(`about - prints info about the program
-                pong - launches pong.
+                Games: pong, minesweeper
                 donut - shows a donut (code by a1k0n)
                 typewriter <pixel-size> - opens 'typewriter', where you... type text I guess.
                 echo <message> - outputs <message>
@@ -101,7 +101,7 @@ const commandSlice = createSlice({
                 help - displays this message`, state);
         },
         about: (state) => {
-            printConsole(`Bel.Hub v0.3
+            printConsole(`Bel.Hub v0.4
                 Created by Artem Biliakov (BelDot) in 2025.
                 Made with Vite, React and Redux. Deployed via GitHub Pages.
                 Idea inspired by Linux and Bash.`, state)
