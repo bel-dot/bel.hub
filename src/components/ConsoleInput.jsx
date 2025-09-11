@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 import { useDispatch } from 'react-redux';
-import { help, unknown, echo, about, startPong, clear, donut, typewriter } from '../state/command/commandSlice'; 
+import { help, unknown, echo, about, startPong, startMinesweeper, clear, donut, typewriter } from '../state/command/commandSlice'; 
 import './ConsoleInput.scss';
 import 'animate.css';
 
@@ -35,6 +35,9 @@ function ConsoleInput() {
             break;
          case 'pong':
             dispatch(startPong());
+            break;
+         case 'minesweeper':
+            dispatch(startMinesweeper());
             break;
          case 'clear':
             dispatch(clear());

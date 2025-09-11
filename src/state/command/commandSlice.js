@@ -4,6 +4,7 @@ const initialState = {
     showStartScreen: true,
     showConsole: false,
     showPong: false,
+    showMinesweeper: false,
     showTypewriter: false,
     consoleText: ``,
     A: 1,
@@ -18,6 +19,13 @@ function printConsole(text, state) {
 
 export const startPong = createAsyncThunk(
     'commands/pong',
+    async () => {
+        await new Promise((resolve) => setTimeout(resolve, 1000));
+    }
+);
+
+export const startMinesweeper = createAsyncThunk(
+    'commands/minesweeper',
     async () => {
         await new Promise((resolve) => setTimeout(resolve, 1000));
     }
@@ -119,6 +127,7 @@ const commandSlice = createSlice({
             state.showConsole = true;
             state.showPong = false;
             state.showTypewriter = false;
+            state.showMinesweeper = false;
         }
     },
     extraReducers: (builder) => {
@@ -130,10 +139,17 @@ const commandSlice = createSlice({
                 state.showConsole = false;
                 state.showPong = true;
             })
+            .addCase(startMinesweeper.pending, (state) => {
+                printConsole("Launching minesweeper...", state);
+            })
+            .addCase(startMinesweeper.fulfilled, (state) => {
+                state.showConsole = false;
+                state.showMinesweeper = true;
+            })
     }
 });
 
-export const { unknown, help, about, echo, pong, quit, clear, donut, start, typewriter } =
+export const { unknown, help, about, echo, quit, clear, donut, start, typewriter } =
   commandSlice.actions;
 
 export default commandSlice.reducer;
