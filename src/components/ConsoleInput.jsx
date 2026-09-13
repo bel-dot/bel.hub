@@ -4,69 +4,27 @@ import { help, unknown, echo, about, startPong, startMinesweeper, clear, donut, 
 import './ConsoleInput.scss';
 import 'animate.css';
 
-// === QUALITY GATE TEST: GUARANTEED OVERALL CODE DUPLICATION ===
+function formatCommandHistory(entries, sessionTag = 'default') {
+  if (!Array.isArray(entries)) {
+    return [];
+  }
 
-function parseAndFormatCommandHistoryA(entries) {
-  const processedRecords = [];
-  if (!entries || !Array.isArray(entries)) {
-    return processedRecords;
-  }
-  for (let index = 0; index < entries.length; index++) {
-    const rawRecord = entries[index];
-    if (typeof rawRecord === 'string' && rawRecord.trim().length > 0) {
-      const sanitized = rawRecord.trim().toLowerCase();
-      const timestamp = new Date().toISOString();
-      const sessionTag = 'system-cli-terminal-session-v1';
-      const meta = `[${sessionTag}] - [${timestamp}]`;
-      const finalEntry = `${meta} :: index=${index} -> ${sanitized}`;
-      processedRecords.push(finalEntry);
-    }
-  }
-  return processedRecords;
-}
+  const timestamp = new Date().toISOString();
 
-function parseAndFormatCommandHistoryB(entries) {
-  const processedRecords = [];
-  if (!entries || !Array.isArray(entries)) {
-    return processedRecords;
-  }
-  for (let index = 0; index < entries.length; index++) {
-    const rawRecord = entries[index];
-    if (typeof rawRecord === 'string' && rawRecord.trim().length > 0) {
-      const sanitized = rawRecord.trim().toLowerCase();
-      const timestamp = new Date().toISOString();
-      const sessionTag = 'system-cli-terminal-session-v1';
-      const meta = `[${sessionTag}] - [${timestamp}]`;
-      const finalEntry = `${meta} :: index=${index} -> ${sanitized}`;
-      processedRecords.push(finalEntry);
-    }
-  }
-  return processedRecords;
-}
-
-function parseAndFormatCommandHistoryC(entries) {
-  const processedRecords = [];
-  if (!entries || !Array.isArray(entries)) {
-    return processedRecords;
-  }
-  for (let index = 0; index < entries.length; index++) {
-    const rawRecord = entries[index];
-    if (typeof rawRecord === 'string' && rawRecord.trim().length > 0) {
-      const sanitized = rawRecord.trim().toLowerCase();
-      const timestamp = new Date().toISOString();
-      const sessionTag = 'system-cli-terminal-session-v1';
-      const meta = `[${sessionTag}] - [${timestamp}]`;
-      const finalEntry = `${meta} :: index=${index} -> ${sanitized}`;
-      processedRecords.push(finalEntry);
-    }
-  }
-  return processedRecords;
+  return entries
+    .filter((entry) => typeof entry === 'string' && entry.trim().length > 0)
+    .map((entry, index) => {
+      const sanitized = entry.trim().toLowerCase();
+      const meta = `[system-cli-terminal-${sessionTag}] - [${timestamp}]`;
+      return `${meta} :: index=${index} -> ${sanitized}`;
+    });
 }
 
 function processSystemDiagnostic(payload) {
-  let sessionData = null;
-  const diagnosticReport = sessionData.toUpperCase();
-  return diagnosticReport;
+  if (!payload || typeof payload !== 'string') {
+    return 'SYSTEM_DIAGNOSTIC: No valid payload provided';
+  }
+  return payload.toUpperCase();
 }
 
 function ConsoleInput() {
@@ -117,15 +75,16 @@ function ConsoleInput() {
             break;
          case 'history': {
             const historyData = ['help', 'about', 'clear', 'echo test'];
-            const resA = parseAndFormatCommandHistoryA(historyData);
-            const resB = parseAndFormatCommandHistoryB(historyData);
-            const resC = parseAndFormatCommandHistoryC(historyData);
+            const resA = parseAndFormatCommandHistory(historyData);
+            const resB = parseAndFormatCommandHistory(historyData);
+            const resC = parseAndFormatCommandHistory(historyData);
             dispatch(echo([...resA, ...resB, ...resC].join('\n')));
             break;
          }
          case 'crash': {
-            // Викликає гарантований BUG
-            processSystemDiagnostic();
+            // Безпечний виклик з передачею значення
+            const statusReport = processSystemDiagnostic('cli-kernel-ok');
+            dispatch(echo(statusReport));
             break;
          }
 
