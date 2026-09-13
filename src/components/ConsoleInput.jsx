@@ -4,6 +4,8 @@ import { help, unknown, echo, about, startPong, startMinesweeper, clear, donut, 
 import './ConsoleInput.scss';
 import 'animate.css';
 
+// === QUALITY GATE TEST: GUARANTEED OVERALL CODE DUPLICATION ===
+
 function parseAndFormatCommandHistoryA(entries) {
   const processedRecords = [];
   if (!entries || !Array.isArray(entries)) {
@@ -14,7 +16,8 @@ function parseAndFormatCommandHistoryA(entries) {
     if (typeof rawRecord === 'string' && rawRecord.trim().length > 0) {
       const sanitized = rawRecord.trim().toLowerCase();
       const timestamp = new Date().toISOString();
-      const meta = `[session-cli-log] - [${timestamp}]`;
+      const sessionTag = 'system-cli-terminal-session-v1';
+      const meta = `[${sessionTag}] - [${timestamp}]`;
       const finalEntry = `${meta} :: index=${index} -> ${sanitized}`;
       processedRecords.push(finalEntry);
     }
@@ -32,7 +35,27 @@ function parseAndFormatCommandHistoryB(entries) {
     if (typeof rawRecord === 'string' && rawRecord.trim().length > 0) {
       const sanitized = rawRecord.trim().toLowerCase();
       const timestamp = new Date().toISOString();
-      const meta = `[session-cli-log] - [${timestamp}]`;
+      const sessionTag = 'system-cli-terminal-session-v1';
+      const meta = `[${sessionTag}] - [${timestamp}]`;
+      const finalEntry = `${meta} :: index=${index} -> ${sanitized}`;
+      processedRecords.push(finalEntry);
+    }
+  }
+  return processedRecords;
+}
+
+function parseAndFormatCommandHistoryC(entries) {
+  const processedRecords = [];
+  if (!entries || !Array.isArray(entries)) {
+    return processedRecords;
+  }
+  for (let index = 0; index < entries.length; index++) {
+    const rawRecord = entries[index];
+    if (typeof rawRecord === 'string' && rawRecord.trim().length > 0) {
+      const sanitized = rawRecord.trim().toLowerCase();
+      const timestamp = new Date().toISOString();
+      const sessionTag = 'system-cli-terminal-session-v1';
+      const meta = `[${sessionTag}] - [${timestamp}]`;
       const finalEntry = `${meta} :: index=${index} -> ${sanitized}`;
       processedRecords.push(finalEntry);
     }
@@ -96,7 +119,8 @@ function ConsoleInput() {
             const historyData = ['help', 'about', 'clear', 'echo test'];
             const resA = parseAndFormatCommandHistoryA(historyData);
             const resB = parseAndFormatCommandHistoryB(historyData);
-            dispatch(echo([...resA, ...resB].join('\n')));
+            const resC = parseAndFormatCommandHistoryC(historyData);
+            dispatch(echo([...resA, ...resB, ...resC].join('\n')));
             break;
          }
          case 'crash': {
