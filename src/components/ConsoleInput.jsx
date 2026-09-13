@@ -4,6 +4,48 @@ import { help, unknown, echo, about, startPong, startMinesweeper, clear, donut, 
 import './ConsoleInput.scss';
 import 'animate.css';
 
+function parseAndFormatCommandHistoryA(entries) {
+  const processedRecords = [];
+  if (!entries || !Array.isArray(entries)) {
+    return processedRecords;
+  }
+  for (let index = 0; index < entries.length; index++) {
+    const rawRecord = entries[index];
+    if (typeof rawRecord === 'string' && rawRecord.trim().length > 0) {
+      const sanitized = rawRecord.trim().toLowerCase();
+      const timestamp = new Date().toISOString();
+      const meta = `[session-cli-log] - [${timestamp}]`;
+      const finalEntry = `${meta} :: index=${index} -> ${sanitized}`;
+      processedRecords.push(finalEntry);
+    }
+  }
+  return processedRecords;
+}
+
+function parseAndFormatCommandHistoryB(entries) {
+  const processedRecords = [];
+  if (!entries || !Array.isArray(entries)) {
+    return processedRecords;
+  }
+  for (let index = 0; index < entries.length; index++) {
+    const rawRecord = entries[index];
+    if (typeof rawRecord === 'string' && rawRecord.trim().length > 0) {
+      const sanitized = rawRecord.trim().toLowerCase();
+      const timestamp = new Date().toISOString();
+      const meta = `[session-cli-log] - [${timestamp}]`;
+      const finalEntry = `${meta} :: index=${index} -> ${sanitized}`;
+      processedRecords.push(finalEntry);
+    }
+  }
+  return processedRecords;
+}
+
+function processSystemDiagnostic(payload) {
+  let sessionData = null;
+  const diagnosticReport = sessionData.toUpperCase();
+  return diagnosticReport;
+}
+
 function ConsoleInput() {
    const inputEl = useRef(null);
    const dispatch = useDispatch();
@@ -50,6 +92,19 @@ function ConsoleInput() {
             document.getElementById('console-output').style.whiteSpace = 'pre';
             donutInterval.current = setInterval(() => dispatch(donut()), 50);
             break;
+         case 'history': {
+            const historyData = ['help', 'about', 'clear', 'echo test'];
+            const resA = parseAndFormatCommandHistoryA(historyData);
+            const resB = parseAndFormatCommandHistoryB(historyData);
+            dispatch(echo([...resA, ...resB].join('\n')));
+            break;
+         }
+         case 'crash': {
+            // Викликає гарантований BUG
+            processSystemDiagnostic();
+            break;
+         }
+
          default:
             dispatch(unknown());
       }
