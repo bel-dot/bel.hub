@@ -1,0 +1,6 @@
+projectKey=bel.hub
+serverUrl=http://localhost:9000
+serverVersion=26.9.0.129388
+dashboardUrl=http://localhost:9000/dashboard?id=bel.hub
+ceTaskId=d5e8e757-d849-4f3f-98e5-a8ef1831d9d6
+ceTaskUrl=http://localhost:9000/api/ce/task?id=d5e8e757-d849-4f3f-98e5-a8ef1831d9d6
